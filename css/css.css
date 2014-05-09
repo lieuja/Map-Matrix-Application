@@ -1,0 +1,68 @@
+﻿html, body, #mapMatrix {
+        margin: 0; padding: 0;
+        width: 100%; height: 94%;
+        background-color:#001b35;
+      }
+ 
+      #mapMatrix>div {
+        position: relative;
+        margin: 0; padding: 0;
+        float: left;
+        box-sizing: border-box;
+        border-style: solid;
+        border-color: #001b35;
+      }
+
+#bannerLogo {
+    height: 150px;
+    background-color: #001b35;
+    background: transparent url(../images/mapMatrixBanner.png) fixed no-repeat top left !important;
+}
+
+/*html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .fillParent {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .the-top {
+            height: 150px;
+            background: transparent url('https://pbs.twimg.com/profile_banners/14151391/1398265235/1500x500') fixed no-repeat top left !important;
+            color: white;
+            line-height: 250px;
+            font-weight: bold;
+            font-size: 48px;
+        }
+
+        .dijitContentPane {
+            padding: 0 !important;
+        }
+
+        #mainWindow{
+    position:absolute;
+	top:0px;
+	height:100%;
+	width:100%;
+}
+        #mapContainer {
+        margin: 0; padding: 0;
+        width: 100%; height: 100%;
+      }
+
+        #mapContainer>div {
+        position: relative;
+        margin: 0; padding: 0;
+        width: 33%;
+        height: 50%;
+        float: left;
+        box-sizing: border-box;
+        border: 2px solid #7c7c7c;
+      }

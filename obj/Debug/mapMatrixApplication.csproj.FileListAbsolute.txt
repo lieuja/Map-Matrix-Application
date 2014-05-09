@@ -1,0 +1,6 @@
+C:\Projects\mapMatrixApplication\mapMatrixApplication\bin\mapMatrixApplication.dll.config
+C:\Projects\mapMatrixApplication\mapMatrixApplication\bin\mapMatrixApplication.dll
+C:\Projects\mapMatrixApplication\mapMatrixApplication\bin\mapMatrixApplication.pdb
+C:\Projects\mapMatrixApplication\mapMatrixApplication\obj\Debug\mapMatrixApplication.dll
+C:\Projects\mapMatrixApplication\mapMatrixApplication\obj\Debug\mapMatrixApplication.pdb
+C:\Projects\mapMatrixApplication\mapMatrixApplication\obj\Debug\mapMatrixApplication.csprojResolveAssemblyReference.cache

@@ -1,61 +1,47 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
     <title>FEMA Situational Maps</title>
+
     <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/esri/css/esri.css" />
-    <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/dojo/dojo/resources/dojo.css">
     <link rel="stylesheet" type="text/css" href="css/css.css" />
 
+</head>
+<body>
 
-    <script data-dojo-config="async: true" src="http://js.arcgis.com/3.9/"></script>
-
-   
+    <div id="bannerLogo"></div>
+    <div id="mapMatrix" data-dojo-type="matrix/MapMatrix" data-dojo-props="rows: 2, columns: 3"></div>
+    
+    <script>
+        var dojoConfig = {
+            async: true,
+            packages: [{
+                name: "matrix",
+                location: location.pathname.replace(/[^\/]+$/, '') + "js/matrix"
+            }]
+        };
+    </script>
 
     <script src="http://js.arcgis.com/3.9compact/"></script>
 
-    <script src="js/maps.js"></script>
-</head>
-<body>
-    <!--
-    <div data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design: 'headline', 'class': 'fillParent', gutters: false">
+    <script>
 
-        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'top', 'class': 'the-top'">BorderContainer Demo</div>
+        require([
+            "dojo/parser",
+            "dojo/domReady!"
+        ], function(
+            parser
+        ){
 
-        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'leading'">Leading</div>
+            parser.parse();
 
-        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center', 'class': 'the-center'" id="map">
-        <!----------------------------------------------------------------------------------------------------------------->
-    <!------------------------------------------------------------------------------------------------------------------------
-        <div id="content" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="region: 'center', gutters: false">
-            <div id="topRow" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="region: 'top', gutters: false">
-                <div id="topLeft" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'left', 'class': 'leftMap mapPane'"></div>
-                <div id="topCenter" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center', 'class': 'centerMap mapPane'"></div>
-                <div id="topRight" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'right', 'class': 'rightMap mapPane'"></div>
-            </div>
-            <div id="bottomRow" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="region: 'center', gutters: false">
-                <div id="topLeft" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'left', 'class': 'leftMap mapPane'"></div>
-                <div id="topCenter" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center', 'class': 'centerMap mapPane'"></div>
-                <div id="topRight" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'right', 'class': 'rightMap mapPane'"></div>
-            </div>
-        </div>
-        
+        });
 
-    <div id="mainWindow">
-        <div id="banner" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design: 'headline', 'class': 'fillParent', gutters: false">
-            <div id="logo " data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'top', 'class': 'the-top'">BorderContainer Demo</div>
-        </div>
-        <div id="centerMaps" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center', 'class': 'the-center'">
-            <div id="mapContainer"></div>
-            </div>
-
-
-        </div>
-        --------------------------------------------------------------------------------------------------------------------------->
-    <div id="bannerLogo"></div>
-    <div id="mapMatrix"></div>
-           
+    </script>
 
 </body>
 </html>

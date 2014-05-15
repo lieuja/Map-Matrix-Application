@@ -56,9 +56,9 @@ define([
 
     },
 
-    _createMap: function(itemId) {
+    _createMap: function(e) {
 
-      itemId = itemId || "eefd470113994f30b1e17a6be3bbc870";
+      itemId = e.itemId || "eefd470113994f30b1e17a6be3bbc870";
       
       setTimeout(lang.hitch(this, function() {
         this.map = arcgisUtils.createMap(itemId, this.mapId, {

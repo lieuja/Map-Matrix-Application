@@ -32,13 +32,26 @@ define([
   domConstruct
 ) {
 
-    var ResultItem = declare([_WidgetBase, _TemplatedMixin], {
+  var ResultItem = declare([_WidgetBase, _TemplatedMixin], {
 
-        templateString: "<li data-itemid='${itemId}'>${label}</li>",
+    templateString: "<li><a href='#' data-dojo-attach-event='click: _onClick'>${label}</a></li>",
+
+    baseClass: "result-item",
 
     label: "foo",
 
-    itemId: null
+    itemId: null,
+    
+    parent: null,
+    
+    _onClick: function(e) {
+      
+      this.parent.onItemSelect({
+        itemId: this.itemId
+      });
+      
+      e.preventDefault(); // (JB) cancels any navigation the anchor click may have invoked
+    }
 
   });
 
@@ -110,12 +123,14 @@ define([
         console.log('results', results);
 
         array.forEach(results, lang.hitch(this, function (result, i) {
-            console.log(result);
+            //console.log(result);
             var item = new ResultItem({
                 label: result.title,
-                itemId: result.id
+                itemId: result.id,
+                parent: this
             });
-            console.log(item);
+            item.startup(); // (JB) even though it isn't implemented
+            //console.log(item);
             domConstruct.place(item.domNode, this.resultsListNode, 'last');
         }));
         //cycle through array
@@ -137,7 +152,7 @@ define([
 
     },
 
-    onItemSelect: function() { }
+    onItemSelect: function(e) { /* e.itemId */ }
 
   });
 

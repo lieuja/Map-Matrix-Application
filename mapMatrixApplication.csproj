@@ -68,7 +68,11 @@
     <Content Include="css\css.css" />
     <Content Include="images\mapMatrixBanner.png" />
     <Content Include="index.html" />
-    <Content Include="js\maps.js" />
+    <Content Include="js\matrix\MapContainer.js" />
+    <Content Include="js\matrix\MapMatrix.js" />
+    <Content Include="js\matrix\MapSearch.js" />
+    <Content Include="js\matrix\styles\MapMatrix.css" />
+    <Content Include="js\matrix\templates\MapSearch.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

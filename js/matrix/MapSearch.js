@@ -13,7 +13,8 @@ define([
   "dojo/_base/json",
   "dojo/_base/lang",
   "dojo/_base/array",
-  'dojo/dom-construct'
+  'dojo/dom-construct',
+  'dojo/keys'
 ], function(
   declare,
   domAttr,
@@ -29,44 +30,56 @@ define([
   JSON,
   lang,
   array,
-  domConstruct
+  domConstruct,
+  keys
 ) {
 
-  var ResultItem = declare([_WidgetBase, _TemplatedMixin], {
+    var ResultItem = declare([_WidgetBase, _TemplatedMixin], {
 
-    templateString: "<li><a href='#' data-dojo-attach-event='click: _onClick'>${label}</a></li>",
+        templateString: "<li><a href='#' data-dojo-attach-event='click: _onClick'>${label}</a></li>",
 
-    baseClass: "result-item",
+        baseClass: "result-item",
 
-    label: "foo",
+        label: "foo",
 
-    itemId: null,
+        itemId: null,
     
-    parent: null,
+        parent: null,
     
-    _onClick: function(e) {
+        _onClick: function(e) {
       
-      this.parent.onItemSelect({
-        itemId: this.itemId
-      });
+            this.parent.onItemSelect({
+                itemId: this.itemId
+            });
       
-      e.preventDefault(); // (JB) cancels any navigation the anchor click may have invoked
-    }
+            e.preventDefault(); // (JB) cancels any navigation the anchor click may have invoked
+        }
 
-  });
+    });
+    //press enter key
+/*    on(domClass.byId("someid"), "keypress", function(evt) {
+            case keys.ENTER:
+    this._searchPortal();
+}*/
 
-  var MapSearch = declare([ _WidgetBase, _TemplatedMixin ], {
+    var MapSearch = declare([ _WidgetBase, _TemplatedMixin ], {
 
-    templateString: template,
-    baseClass: "map-search",
-    portal: null,
-    portalUrl: 'http://www.arcgis.com',
+        templateString: template,
+        baseClass: "map-search",
+        portal: null,
+        portalUrl: 'http://www.arcgis.com',
+        resultsListArray: [],
 
-    startup: function() {
-        this.inherited(arguments);
-        this._connectToPortal();
-
-      
+        startup: function() {
+            this.inherited(arguments);
+            this._connectToPortal();
+        },        
+    
+    _clearResults: function() {
+        //console.log('cleared');
+        domAttr.set(this.searchTextNode, "value", '');
+        domConstruct.empty(this.resultsListNode);
+        this.resultsListArray = [];
     },
     
     _searchPortal: function () {
@@ -104,6 +117,9 @@ define([
     _onClick: function() {
 
         var value = domAttr.get(this.searchTextNode, "value");
+        /*if (this.searchTextNode == '') {
+            alert: ('please insert text');
+        }*/
         if (this.portal) {
             //search portal
             this._searchPortal();
@@ -113,9 +129,6 @@ define([
             this._searchPortal();
 
         }
-
-
-      //esri/arcgis/Portal::queryItems( params ).then(lang.hitch(this, _onResults));
 
     },
 
@@ -132,17 +145,8 @@ define([
             item.startup(); // (JB) even though it isn't implemented
             //console.log(item);
             domConstruct.place(item.domNode, this.resultsListNode, 'last');
+            this.resultsListArray.push(item);
         }));
-        //cycle through array
-        //create <li> for each result
-        //add <li> to resultsListNode
-
-        // dojo/_base/array::forEach(results, function(result) {
-
-        // create ResultItem in this.resultsListNode
-        // don't forget to call ::startup()
-
-        //})
 
     },
 

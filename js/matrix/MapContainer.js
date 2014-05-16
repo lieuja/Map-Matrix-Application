@@ -63,7 +63,7 @@ define([
       setTimeout(lang.hitch(this, function() {
         this.map = arcgisUtils.createMap(itemId, this.mapId, {
           mapOptions: {
-
+              
           }
         });
       }), 500);

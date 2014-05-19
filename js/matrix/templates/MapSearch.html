@@ -3,9 +3,11 @@
   <div class="search-form">
     <input type="text" data-dojo-attach-point="searchTextNode" />
     <button data-dojo-attach-event="click: _onClick"><span class="map-search-button"></span></button>
+    
+    <button data-dojo-attach-event="click: _clearResults"><span class="map-clear-button"></span></button>
   </div>
   <div>
-    <ul data-dojo-attach-point="resultsListNode">
+    <ul class="result-list" data-dojo-attach-point="resultsListNode">
     </ul>
   </div>
 </div>

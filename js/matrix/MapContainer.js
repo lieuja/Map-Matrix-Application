@@ -7,7 +7,12 @@ define([
   "dijit/_TemplatedMixin",
   "dijit/registry",
   "./MapSearch",
-  "esri/arcgis/utils"
+  "esri/arcgis/utils",
+  "dojo/parser",
+  "dijit/Dialog",
+  "dojo/dom-style",
+  "dojo/dom-class"
+
 ], function(
   declare,
   lang,
@@ -17,7 +22,11 @@ define([
   _TemplatedMixin,
   registry,
   MapSearch,
-  arcgisUtils
+  arcgisUtils,
+  parser,
+  Dialog,
+  domStyle,
+  domClass
 ) {
 
   var MapContainer = declare([ _WidgetBase, _TemplatedMixin ], {
@@ -80,11 +89,38 @@ define([
               "class": "matrix-map-widget",
               innerHTML: "HI"
             }, widgetContainer);
-
+            
             on(this.storyMapNode, "click", lang.hitch(this, function() {
+               this.storyMapDlg = new Dialog({
+                    title: 'My Dialog',
+                    content: this.mapDiv,
+                  // style: 'width:100%, height:100%',
+                });
+               this.storyMapDlg.startup();
+               this.storyMapDlg.show();
+               this.map.resize();
+             
+             /*
+                //make dom bigger, and place on top of everything, and then resize
+                domStyle.set(this.domNode, { height: '100%', width: '100%' });
 
-              
-
+                if (domClass.contains(this.domNode, 'non-expanded')) {
+                    //remove non-expanded
+                    domClass.remove(this.domNode, 'non-expanded');
+                    //add expanded
+                    domClass.add(this.domNode, 'expanded');
+                    //resize map
+                    
+                    
+                } else {
+                    //remove expanded
+                    domClass.remove(this.domNode, 'expanded');
+                    //add non-expanded
+                    domClass.add(this.domNode, 'non-expanded');
+                    //resize map
+                }
+                this.map.resize();
+                */
             }));
           
         }));

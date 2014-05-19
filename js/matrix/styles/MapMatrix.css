@@ -79,3 +79,18 @@
 .matrix-map-widget + .matrix-map-widget {
   margin-left: 15px;
 }
+/*
+.expanded {
+    height: 100%;
+    width: 100%
+}
+
+.non-expanded {
+   height: 100px;
+   width: 100px
+}*/
+
+.dijitDialogPaneContent {
+    width:100% !important;
+    height:100% !important;
+}

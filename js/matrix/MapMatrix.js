@@ -61,6 +61,7 @@ define([
         if (i % this.columns !== 0) {
           classes.push("border-left");
         }
+        classes.push('non-expanded');
 
         // create the map container
         var mapDiv = domConstruct.create("div", { }, this.domNode);

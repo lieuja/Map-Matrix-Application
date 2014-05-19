@@ -56,11 +56,6 @@ define([
         }
 
     });
-    //press enter key
-/*    on(domClass.byId("someid"), "keypress", function(evt) {
-            case keys.ENTER:
-    this._searchPortal();
-}*/
 
     var MapSearch = declare([ _WidgetBase, _TemplatedMixin ], {
 

@@ -73,7 +73,13 @@ define([
         startup: function() {
             this.inherited(arguments);
             this._connectToPortal();
-        },        
+
+            on(this.searchTextNode, "keypress", lang.hitch(this, function(evt) {
+                if (evt.charCode === 13) {
+                  this._searchPortal();
+                }
+            }));
+    },        
     
     _clearResults: function() {
         //console.log('cleared');

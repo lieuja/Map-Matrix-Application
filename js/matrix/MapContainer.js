@@ -2,6 +2,7 @@ define([
   "dojo/_base/declare",
   "dojo/_base/lang",
   "dojo/dom-construct",
+  "dojo/on",
   "dijit/_WidgetBase",
   "dijit/_TemplatedMixin",
   "dijit/registry",
@@ -11,6 +12,7 @@ define([
   declare,
   lang,
   domConstruct,
+  on,
   _WidgetBase,
   _TemplatedMixin,
   registry,
@@ -61,12 +63,34 @@ define([
       itemId = e.itemId || "eefd470113994f30b1e17a6be3bbc870";
       
       setTimeout(lang.hitch(this, function() {
-        this.map = arcgisUtils.createMap(itemId, this.mapId, {
+        arcgisUtils.createMap(itemId, this.mapId, {
           mapOptions: {
               
           }
-        });
+        }).then(lang.hitch(this, function(ee) {
+
+          this.map = ee.map;
+
+          
+            var widgetContainer = domConstruct.create("div", {
+              "class": "matrix-map-widget-container"
+            }, this.map.root);
+
+            this.storyMapNode = domConstruct.create("div", {
+              "class": "matrix-map-widget",
+              innerHTML: "HI"
+            }, widgetContainer);
+
+            on(this.storyMapNode, "click", lang.hitch(this, function() {
+
+              
+
+            }));
+          
+        }));
       }), 500);
+
+      
 
     }
 

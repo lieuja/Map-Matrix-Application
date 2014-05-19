@@ -53,7 +53,7 @@ define([
 
       //})
 
-    }
+    },
 
     _onItemClick: function() {
 

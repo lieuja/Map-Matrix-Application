@@ -35,23 +35,16 @@ define([
 ) {
 
     var ResultItem = declare([_WidgetBase, _TemplatedMixin], {
-
         templateString: "<li><a href='#' data-dojo-attach-event='click: _onClick'>${label}</a></li>",
-
         baseClass: "result-item",
-
         label: "foo",
-
-        itemId: null,
-    
+        itemId: null,    
         parent: null,
-    
-        _onClick: function(e) {
-      
+
+        _onClick: function(e) {      
             this.parent.onItemSelect({
                 itemId: this.itemId
-            });
-      
+            });      
             e.preventDefault(); // (JB) cancels any navigation the anchor click may have invoked
         }
 
@@ -69,8 +62,10 @@ define([
             this.inherited(arguments);
             this._connectToPortal();
 
-            on(this.searchTextNode, "keypress", lang.hitch(this, function(evt) {
+            on(this.searchTextNode, "keypress", lang.hitch(this, function (evt) {                
                 if (evt.charCode === 13) {
+                  //clears results list
+                  this._clearResultsForNewSearch();
                   this._searchPortal();
                 }
             }));
@@ -82,16 +77,22 @@ define([
         domConstruct.empty(this.resultsListNode);
         this.resultsListArray = [];
     },
+
+    _clearResultsForNewSearch: function() {
+        //clears the result list 
+        domConstruct.empty(this.resultsListNode);
+    },
     
     _searchPortal: function () {
         console.log('is searching');
-        if (this.portal) {
+        if (this.portal) {            
             console.log('searching');
             var params = {
                 q: domAttr.get(this.searchTextNode, "value"),
                 num: 5,
-                type: 'Web Map'
+                type: 'Web Map'                
             };
+            //console.log(params);
             this.portal.queryItems(params).then(lang.hitch(this, function(result){
                // console.log('success', (result));
                 this._onResults(result.results);
@@ -115,8 +116,9 @@ define([
        
     },
 
-    _onClick: function() {
-
+    _onClick: function () {
+        //clears results list
+        this._clearResultsForNewSearch();
         var value = domAttr.get(this.searchTextNode, "value");
         /*if (this.searchTextNode == '') {
             alert: ('please insert text');
@@ -144,7 +146,7 @@ define([
                 parent: this
             });
             item.startup(); // (JB) even though it isn't implemented
-            //console.log(item);
+            console.log(item);
             domConstruct.place(item.domNode, this.resultsListNode, 'last');
             this.resultsListArray.push(item);
         }));

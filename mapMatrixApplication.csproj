@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\css.css" />
+    <Content Include="images\expand.png" />
     <Content Include="images\mapMatrixBanner.png" />
     <Content Include="index.html" />
     <Content Include="js\matrix\MapContainer.js" />

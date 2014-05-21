@@ -64,10 +64,11 @@
   background-color: white;
   color: #4C4C4C;
   border: 1px solid #57585A;
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   line-height: 30px;
   text-align: center;
+  background: url(../../../images/fullScreen.png) no-repeat; 
 
 }
 
@@ -77,6 +78,35 @@
 }
 
 .matrix-map-widget + .matrix-map-widget {
+  margin-left: 15px;
+}
+
+.back-to-search-matrix-map-widget-container {
+  position: absolute;
+  top: 20px; right: 60px;
+  text-align: right;
+}
+
+.back-to-search-matrix-map-widget {
+
+  border-radius: 4px;
+  background-color: white;
+  color: #4C4C4C;
+  border: 1px solid #57585A;
+  width: 25px;
+  height: 25px;
+  line-height: 30px;
+  text-align: center;
+  background: url(../../../images/backToSearch.png) no-repeat; 
+
+}
+
+.back-to-search-matrix-map-widget:hover {
+  cursor: pointer;
+  background-color: #eee;
+}
+
+.back-to-search-matrix-map-widget + .back-to-search-matrix-map-widget {
   margin-left: 15px;
 }
 /*

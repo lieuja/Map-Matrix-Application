@@ -153,13 +153,17 @@ define([
 
     },
 
-    _onItemClick: function() {
+    _onItemClick: function () {
+        
 
         this.onItemSelect();
 
     },
 
-    onItemSelect: function(e) { /* e.itemId */ }
+    onItemSelect: function (e) {
+        domStyle.set(this.mapDiv, 'display', 'block');
+        /* e.itemId */
+    }
 
   });
 

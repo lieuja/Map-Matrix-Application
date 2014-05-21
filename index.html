@@ -3,19 +3,47 @@
 <head>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <title>FEMA Situational Maps</title>
 
-    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/esri/css/esri.css" />
+    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.9/js/esri/css/esri.css" />
     <link rel="stylesheet" type="text/css" href="css/css.css" />
-    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.9compact/js/dojo/dijit/themes/claro/claro.css" />
+
+    <script>
+
+        /* DO NOT EDIT ABOVE THIS LINE */
+
+        var matrixConfig = {
+            rows: 2, 
+            columns: 3, 
+            itemIds: [
+                "f0846552762b4ecc8fc1a01d72179f4c",
+                "f0846552762b4ecc8fc1a01d72179f4c",
+                "f0846552762b4ecc8fc1a01d72179f4c",
+                "f0846552762b4ecc8fc1a01d72179f4c",
+                "f0846552762b4ecc8fc1a01d72179f4c",
+                "f0846552762b4ecc8fc1a01d72179f4c"
+            ],
+            focusMapUrlTemplate: "http://www.arcgis.com/home/webmap/viewer.html?webmap=${itemId}",
+            portalUrl: "http://www.arcgis.com/sharing/content/items"
+        };
+
+        /* DO NOT EDIT BELOW THIS LINE */
+
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 </head>
-<body class="tundra">
+<body>
 
     <div id="bannerLogo"></div>
-    <div id="mapMatrix" data-dojo-type="matrix/MapMatrix" data-dojo-props="rows: 2, columns: 3"></div>
+    <div id="mapMatrix"></div>
     
     <script>
         var dojoConfig = {
@@ -27,18 +55,29 @@
         };
     </script>
 
-    <script src="http://js.arcgis.com/3.9compact/"></script>
+    <script src="//js.arcgis.com/3.9compact/"></script>
 
     <script>
 
         require([
             "dojo/parser",
+            "matrix/MapMatrix",
+            "esri/arcgis/utils",
             "dojo/domReady!"
         ], function(
-            parser
+            parser,
+            MapMatrix,
+            arcgisUtils
         ){
 
-            parser.parse();
+            arcgisUtils.arcgisUrl = matrixConfig.portalUrl;
+
+            parser.parse().then(function() {
+
+                var mapMatrix = new MapMatrix(matrixConfig || {}, "mapMatrix");
+                mapMatrix.startup();
+
+            });
 
         });
 

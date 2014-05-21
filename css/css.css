@@ -2,6 +2,7 @@
     margin: 0; padding: 0;
     width: 100%; height: 100%;
     background-color: #001b35;
+    overflow: hidden;
 }
 
 #bannerLogo {
@@ -17,12 +18,3 @@
     /*border-top-width: 8px;*/
     background-color: white;
 }
-
-#mapMatrix button {
-
-}
-
-/*.map-matrix > .map-container > .map-search .map-search-button:before {
-  font-family: "WingDings";
-  content: "J" !important;
-}*/

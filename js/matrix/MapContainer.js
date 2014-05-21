@@ -3,6 +3,7 @@ define([
   "dojo/_base/lang",
   "dojo/dom-construct",
   "dojo/on",
+  "dojo/string",
   "dijit/_WidgetBase",
   "dijit/_TemplatedMixin",
   "dijit/registry",
@@ -11,13 +12,14 @@ define([
   "dojo/parser",
   "dijit/Dialog",
   "dojo/dom-style",
-  "dojo/dom-class"
-
+  "dojo/dom-class",
+  "./FocusMap"
 ], function(
   declare,
   lang,
   domConstruct,
   on,
+  string,
   _WidgetBase,
   _TemplatedMixin,
   registry,
@@ -26,7 +28,8 @@ define([
   parser,
   Dialog,
   domStyle,
-  domClass
+  domClass,
+  FocusMap
 ) {
 
   var MapContainer = declare([ _WidgetBase, _TemplatedMixin ], {
@@ -35,11 +38,15 @@ define([
 
     baseClass: "map-container",
 
+    itemId: null,
+
     search: null,
 
     mapId: null,
 
     map: null,
+
+    focusMapUrlTemplate: null,
 
     startup: function() {
       this.inherited(arguments);
@@ -54,7 +61,8 @@ define([
         id: this.mapId
       }, this.domNode);
 
-      this._createSearch();
+      // this._createSearch();
+      this._createMap();
      
     },
 
@@ -67,9 +75,9 @@ define([
 
     },
 
-    _createMap: function(e) {
+    _createMap: function() {
 
-      itemId = e.itemId || "eefd470113994f30b1e17a6be3bbc870";
+      itemId = this.itemId;
       
       setTimeout(lang.hitch(this, function() {
         arcgisUtils.createMap(itemId, this.mapId, {
@@ -86,80 +94,20 @@ define([
             }, this.map.root);
 
             this.storyMapNode = domConstruct.create("div", {
-              "class": "matrix-map-widget",
-              //innerHTML: ""
+              "class": "matrix-map-widget"
             }, widgetContainer);
             
             on(this.storyMapNode, "click", lang.hitch(this, function() {
-               this.storyMapDlg = new Dialog({
-                    title: 'My Dialog',
-                    content: this.mapDiv,
-                  // style: 'width:100%, height:100%',
-                });
-               //this.storyMapDlg.startup();
-               this.storyMapDlg.show();
-               this.map.resize();
-             
-             /*
-                //make dom bigger, and place on top of everything, and then resize
-                domStyle.set(this.domNode, { height: '100%', width: '100%' });
+              
+              console.log("foo");
 
-                if (domClass.contains(this.domNode, 'non-expanded')) {
-                    //remove non-expanded
-                    domClass.remove(this.domNode, 'non-expanded');
-                    //add expanded
-                    domClass.add(this.domNode, 'expanded');
-                    //resize map
-                    
-                    
-                } else {
-                    //remove expanded
-                    domClass.remove(this.domNode, 'expanded');
-                    //add non-expanded
-                    domClass.add(this.domNode, 'non-expanded');
-                    //resize map
-                }
-                this.map.resize();
-                */
-            }));
+              var focusMap = new FocusMap({
+                url: string.substitute(this.focusMapUrlTemplate, this)
+              }, domConstruct.create("div", {}, this.domNode));
+              focusMap.startup();
 
-            var backToSearchWidgetContainer = domConstruct.create("div", {
-                "class": "back-to-search-matrix-map-widget-container"
-            }, this.map.root);
+              console.log("bar");
 
-            this.backToSearchStoryMapNode = domConstruct.create("div", {
-                "class": "back-to-search-matrix-map-widget",
-                //innerHTML: ""
-            }, backToSearchWidgetContainer);
-
-            on(this.backToSearchStoryMapNode, "click", lang.hitch(this, function () {
-                if (this.storyMapDlg && this.storyMapDlg.open) {
-                    this.storyMapDlg.hide();
-                    
-                }
-                domStyle.set(this.mapDiv, 'display', 'none');
-
-                /*
-                   //make dom bigger, and place on top of everything, and then resize
-                   domStyle.set(this.domNode, { height: '100%', width: '100%' });
-   
-                   if (domClass.contains(this.domNode, 'non-expanded')) {
-                       //remove non-expanded
-                       domClass.remove(this.domNode, 'non-expanded');
-                       //add expanded
-                       domClass.add(this.domNode, 'expanded');
-                       //resize map
-                       
-                       
-                   } else {
-                       //remove expanded
-                       domClass.remove(this.domNode, 'expanded');
-                       //add non-expanded
-                       domClass.add(this.domNode, 'non-expanded');
-                       //resize map
-                   }
-                   this.map.resize();
-                   */
             }));
           
         }));

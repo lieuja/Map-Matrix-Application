@@ -32,6 +32,10 @@ define([
     rows: 1,
     columns: 1,
 
+    itemIds: null,
+
+    focusMapUrlTemplate: null,
+
     maps: null,
 
     startup: function() {
@@ -67,7 +71,9 @@ define([
         var mapDiv = domConstruct.create("div", { }, this.domNode);
         var map = new MapContainer({
           style: style,
-          "class": classes.join(" ")
+          "class": classes.join(" "),
+          itemId: this.itemIds[i] || null,
+          focusMapUrlTemplate: this.focusMapUrlTemplate || null
         }, mapDiv);
         map.startup();
         

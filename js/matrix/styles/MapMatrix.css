@@ -68,7 +68,7 @@
   height: 25px;
   line-height: 30px;
   text-align: center;
-  background: url(../../../images/fullScreen.png) no-repeat; 
+  background: white url(../images/focusMap.png) no-repeat center center; 
 
 }
 
@@ -123,4 +123,40 @@
 .dijitDialogPaneContent {
     width:90% !important;
     height:90% !important;
+}
+
+.focus-map {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 90;
+}
+
+.focus-map iframe {
+  width: 80%;
+  height: 80%;
+  margin: 10%;
+  background-color: white;
+  z-index: 92;
+}
+
+.focus-map .close-node {
+  z-index: 99;
+  cursor: pointer;
+  position: fixed;
+  top: 10%;
+  right: 10%;
+  margin-top: -30px;  
+  line-height: 30px;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  width: 30px;
+  height: 30px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
 }

@@ -19,15 +19,15 @@
             rows: 2, 
             columns: 3, 
             itemIds: [
-                "f0846552762b4ecc8fc1a01d72179f4c",
-                "f0846552762b4ecc8fc1a01d72179f4c",
-                "f0846552762b4ecc8fc1a01d72179f4c",
-                "f0846552762b4ecc8fc1a01d72179f4c",
-                "f0846552762b4ecc8fc1a01d72179f4c",
+                "2618187b305f4eafbae8fd6eb52afc76",
+                "7d987ba67f4640f0869acb82ba064228",
+                "602d901d9d064106aacc05de536de1a1",
+                "b4ae0b42789447b18c4b919682b848ad",
+                "602d901d9d064106aacc05de536de1a1",
                 "f0846552762b4ecc8fc1a01d72179f4c"
             ],
-            focusMapUrlTemplate: "http://www.arcgis.com/home/webmap/viewer.html?webmap=${itemId}",
-            portalUrl: "http://www.arcgis.com/sharing/content/items"
+            focusMapUrlTemplate: "http://fema.maps.arcgis.com/home/webmap/viewer.html?webmap=${itemId}",
+            portalUrl: "http://fema.maps.arcgis.com/sharing/content/items"
         };
 
         /* DO NOT EDIT BELOW THIS LINE */
@@ -62,14 +62,17 @@
         require([
             "dojo/parser",
             "matrix/MapMatrix",
+            "esri/config",
             "esri/arcgis/utils",
             "dojo/domReady!"
         ], function(
             parser,
             MapMatrix,
+            esriConfig,
             arcgisUtils
         ){
 
+            esriConfig.defaults.io.proxyUrl = "/proxyDotNet/proxy.ashx";
             arcgisUtils.arcgisUrl = matrixConfig.portalUrl;
 
             parser.parse().then(function() {

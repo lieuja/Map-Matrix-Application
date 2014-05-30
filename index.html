@@ -15,6 +15,8 @@
 
         /* DO NOT EDIT ABOVE THIS LINE */
 
+        // index.html?group=7a2279a0ef714c58bc13f0776c795242
+
         var matrixConfig = {
             rows: 2, 
             columns: 3, 
@@ -26,8 +28,8 @@
                 "602d901d9d064106aacc05de536de1a1",
                 "f0846552762b4ecc8fc1a01d72179f4c"
             ],
-            focusMapUrlTemplate: "http://fema.maps.arcgis.com/home/webmap/viewer.html?webmap=${itemId}",
-            portalUrl: "http://fema.maps.arcgis.com/sharing/content/items"
+            focusMapUrlTemplate: "http://dcservices.maps.arcgis.com/home/webmap/viewer.html?webmap=${itemId}",
+            portalUrl: "http://dcservices.maps.arcgis.com"
         };
 
         /* DO NOT EDIT BELOW THIS LINE */
@@ -61,25 +63,62 @@
 
         require([
             "dojo/parser",
+            "dojo/_base/array",
             "matrix/MapMatrix",
             "esri/config",
             "esri/arcgis/utils",
+            "esri/urlUtils",
+            "esri/arcgis/Portal",
             "dojo/domReady!"
         ], function(
             parser,
+            array,
             MapMatrix,
             esriConfig,
-            arcgisUtils
+            arcgisUtils,
+            urlUtils,
+            esriPortal,
         ){
 
             esriConfig.defaults.io.proxyUrl = "/proxyDotNet/proxy.ashx";
             arcgisUtils.arcgisUrl = matrixConfig.portalUrl;
 
+            var groupId = (urlUtils.urlToObject(location.href).query || { group: null }).group;
+
             parser.parse().then(function() {
 
-                var mapMatrix = new MapMatrix(matrixConfig || {}, "mapMatrix");
-                mapMatrix.startup();
+                var portal = new esriPortal.Portal(matrixConfig.portalUrl);
+                portal.on("load", function() {
 
+                    portal.queryGroup(groupId).then(function(response) {
+
+                        var group = response.results[0];
+
+                        group.queryItems({
+                            q: 'type:"Web Map"',
+                            num: 6
+                        }).then(function(groupResponse) {
+
+                            var items = groupResponse.results;
+
+                            matrixConfig.itemIds = array.map(items, function(item) {
+                                return item.id;
+                            });
+
+                            var mapMatrix = new MapMatrix(matrixConfig || {}, "mapMatrix");
+                            mapMatrix.startup();
+
+                        })
+
+                    });
+
+                });
+
+
+                    
+
+
+                
             });
 
         });

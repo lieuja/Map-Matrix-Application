@@ -15,7 +15,7 @@
 
         /* DO NOT EDIT ABOVE THIS LINE */
 
-        // index.html?group=7a2279a0ef714c58bc13f0776c795242
+        // index.html?appid=d0098d3171944e19a5555cb96ae0e015&group=7a2279a0ef714c58bc13f0776c795242
 
         var matrixConfig = {
             rows: 2, 
@@ -50,10 +50,16 @@
     <script>
         var dojoConfig = {
             async: true,
-            packages: [{
-                name: "matrix",
-                location: location.pathname.replace(/[^\/]+$/, '') + "js/matrix"
-            }]
+            packages: [
+                {
+                    name: "matrix",
+                    location: location.pathname.replace(/[^\/]+$/, '') + "js/matrix"
+                },
+                {
+                    name: "app",
+                    location: location.pathname.replace(/[^\/]+$/, '') + "js/app"
+                }
+            ]
         };
     </script>
 
@@ -69,12 +75,8 @@
             "esri/arcgis/utils",
             "esri/urlUtils",
             "esri/arcgis/Portal",
-            "dojo/domReady!",
             "app/OAuthHelper",
-            "dojo/dom-style",
-            "dojo/dom-attr",
-            "dojo/dom",
-            "dojo/_base/array"
+            "dojo/domReady!"
         ], function(
             parser,
             array,
@@ -83,61 +85,19 @@
             arcgisUtils,
             urlUtils,
             esriPortal,
-            OAuthHelper,
-            domStyle,
-            domAttr,
-            dom,
-            arrayUtils
+            OAuthHelper
         ) {
-            OAuthHelper.Init({
-                appId: "e7ebab8a98034c7e80e9e8e0f502f6bb",
-                portal: "http://dcservices.maps.arcgis.com",
-                expiration: (14 * 24 * 60),
-                popup: false
-            });
-
-            if (OAuthHelper.isSignedIn()) {
-                displayItems();
-            } else {
-                //anonymous view
-                domStyle.set("anonymousPanel", "display", "block");
-                domStyle.set("personalizedPanel", "display", "none");
-            }
-
-            signIn = function () {
-                OAuthHelper.signIn().then(displayItems);
-            }
-
-            function displayItems() {
-                new esriPortal.Portal("http://dcservices.maps.arcgis.com").signIn().then(
-                  function (portalUser) {
-                      console.log("Signed in to the portal: ", portalUser);
-
-                      domAttr.set("userId", "innerHTML", portalUser.fullName);
-                      domStyle.set("anonymousPanel", "display", "none");
-                      domStyle.set("personalizedPanel", "display", "block");
-
-                      queryPortal(portalUser);
-                  }
-                ).otherwise(
-                  function (error) {
-                      console.log("Error occurred while signing in: ", error);
-                  }
-                );
-            }
 
             esriConfig.defaults.io.proxyUrl = "/proxyDotNet/proxy.ashx";
             arcgisUtils.arcgisUrl = matrixConfig.portalUrl + "/sharing/content/items";
 
-            var groupId = (urlUtils.urlToObject(location.href).query || { group: null }).group;
+            var urlObj = urlUtils.urlToObject(location.href);
+            var appId = (urlObj.query || { appid: null }).appid;
+            var groupId = (urlObj.query || { group: null }).group;
 
-            console.log(groupId);
-
-            parser.parse().then(function () {
-                
+            var displayItems = function() {
+                console.log("in displayitems");
                 var portal = window.PORTAL = new esriPortal.Portal(matrixConfig.portalUrl);
-
-                console.log(portal);
 
                 portal.on("load", function () {
 
@@ -163,11 +123,23 @@
                     });
 
                 });
+            };
 
+            parser.parse().then(function () {
+                console.log("initializing oauthhelper");
+                OAuthHelper.init({
+                    appId: appId,
+                    portal: matrixConfig.portalUrl,
+                    expiration: (14 * 24 * 60), // 2 weeks
+                    popup: true
+                });
 
-                    
-
-
+                if (OAuthHelper.isSignedIn()) {
+                    console.log("already signed in");
+                    displayItems();
+                } else {
+                    OAuthHelper.signIn().then(displayItems);
+                }
                 
             });
 

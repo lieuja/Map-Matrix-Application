@@ -77,10 +77,9 @@ define([
 
     _createMap: function() {
 
-      itemId = this.itemId;
-      
       setTimeout(lang.hitch(this, function() {
-        arcgisUtils.createMap(itemId, this.mapId, {
+          var itemId = this.itemId;
+          arcgisUtils.createMap(itemId, this.mapId, {
           mapOptions: {
               
           }
